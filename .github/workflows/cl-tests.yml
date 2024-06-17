@@ -13,12 +13,16 @@ jobs:
 
     strategy:
       matrix:
+        os:
+          - ubuntu-latest
+        #  - macos-latest
         lisp:
           - sbcl-bin
-          - ccl-bin
+        #  - ccl-bin
 
     env:
       LISP: ${{ matrix.lisp }}
+      OS: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +32,8 @@ jobs:
       - uses: 40ants/run-tests@v2
         with:
           asdf-system: puzzles
-          coveralls-token: ${{
-              matrix.lisp == 'sbcl-bin' &&
-              matrix.os == 'ubuntu-latest' &&
-              secrets.github_token }}
+          # Fixed in https://github.com/Shinmera/CLSS/pull/22
+          # coveralls-token: |
+          #  ${{ matrix.lisp == 'sbcl-bin' &&
+          #      matrix.os == 'ubuntu-latest' &&
+          #      secrets.github_token }}
