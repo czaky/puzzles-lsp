@@ -1,0 +1,18 @@
+{
+    "[commonlisp]": {
+        "editor.wordSeparators": "`|;:'\",()"
+    },
+    "editor.formatOnType": true,
+    "editor.tabSize": 2,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.vscode": true,
+        "*.*~": true,
+        "*.fasl": true,
+        ".devcontainer": true
+    },
+    "indentRainbow.ignoreErrorLanguages": [
+        "commonlisp",
+        "markdown"
+    ]
+}
