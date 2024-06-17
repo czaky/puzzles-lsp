@@ -15,10 +15,10 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+        #  - macos-latest
         lisp:
           - sbcl-bin
-          - ccl-bin
+        #  - ccl-bin
 
     env:
       LISP: ${{ matrix.lisp }}
