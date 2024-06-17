@@ -2,7 +2,9 @@
 
 (defpackage #:puzzles/math
   (:use #:cl)
-  (:export #:twice-linear))
+  (:export
+   #:twice-linear
+   #:triangle-numbers))
 (in-package #:puzzles/math)
 
 (defun twice-linear (n)
@@ -32,3 +34,16 @@
       (if (= x (car a)) (pop a))
       (if (= x (car b)) (pop b))
     :finally (return x)))
+
+(defun triangle-numbers (n)
+  "Return the sum of numbers from $n^th$ row of the following triangle.
+
+                1
+              3     5
+          7     9    11
+      13    15    17    19
+    21    23    25    27    29
+    ...
+  "
+  (declare (fixnum n))
+  (* n n n))
