@@ -32,12 +32,8 @@ jobs:
       - uses: 40ants/run-tests@v2
         with:
           asdf-system: puzzles
-          coveralls-token: |
-            ${{ matrix.lisp == 'sbcl-bin' &&
-                matrix.os == 'ubuntu-latest' &&
-                secrets.github_token }}
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-coverage-report
-          path: /tmp/*/*.html
+          # Fixed in https://github.com/Shinmera/CLSS/pull/22
+          # coveralls-token: |
+          #  ${{ matrix.lisp == 'sbcl-bin' &&
+          #      matrix.os == 'ubuntu-latest' &&
+          #      secrets.github_token }}
