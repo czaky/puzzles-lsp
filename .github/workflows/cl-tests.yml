@@ -36,3 +36,8 @@ jobs:
             ${{ matrix.lisp == 'sbcl-bin' &&
                 matrix.os == 'ubuntu-latest' &&
                 secrets.github_token }}
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: /tmp/*/*.html
