@@ -1,5 +1,6 @@
 
-(defparameter *files* '("math" "tree"))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+(defparameter *files* '("math" "tree")))
 
 (asdf:defsystem :puzzles
   :description "Puzzle Solutions."
