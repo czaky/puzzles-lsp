@@ -9,6 +9,8 @@
         "**/.vscode": true,
         "*.*~": true,
         "*.fasl": true,
+        "#*#": true,
+        ".#*": true,
         ".devcontainer": true
     },
     "indentRainbow.ignoreErrorLanguages": [
