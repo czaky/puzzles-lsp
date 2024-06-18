@@ -5,7 +5,7 @@
   (:import-from #:fiveam #:is #:test))
 (in-package #:puzzles/math/tests)
 
-(fiveam:def-suite* :puzzles)
+(fiveam:in-suite* :puzzles)
 
 (test twice-linear
   (is (= 3 (twice-linear 1)))

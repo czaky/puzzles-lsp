@@ -3,10 +3,17 @@
 (defpackage #:puzzles/tree
   (:use #:cl)
   (:export
-   #:teknonymize))
+   #:person
+   #:teknonym
+   #:teknonymize
+   #:make-person
+   #:person-teknonym
+   #:person-children))
 (in-package #:puzzles/tree)
 
 ;; Teknonyms
+
+(deftype sex () '(member #\f #\m))
 
 (defstruct person
   ;; A person in a family-tree.
@@ -14,14 +21,12 @@
   (name nil :type string)
   ;; Input/output to `teknonymize`.
   (teknonym "" :type string)
-  (sex nil :type (member #\m #\f))
+  (sex nil :type sex)
   (children nil :type list))
 
 (defun teknonym (sex level name)
   "Generate the teknonym for person `sex` and its descendant `level` and `name`."
-  (declare (type sex (member #\f #\m))
-           (fixnum level)
-           (name string))
+  (declare (type sex sex) (fixnum level) (string name))
   (format nil "~v@{~A~:*~}~*~:[~;grand~]~:[father~;mother~] of ~A"
     (- level 2) "great-" (> level 1) (char= sex #\f) name))
 
@@ -29,20 +34,18 @@
   "Add teknonyms to the family `tree`."
   (declare (type person tree))
   (labels
-      ((descend (n)
-	 (declare (type person tree))
-	 (if (person-children n)
-	     (let (level name)
-	       (setf (values level name) (descend (first (person-children n))))
-	       (loop
-		 :with clevel = level :with cname = name
-		 :for c :in (cdr (person-children n))
-		 :do (setf (values clevel cname) (descend c))
-		 :when (< level clevel)
-		   :do (setf level clevel
-			     name cname))
-	       (setf (person-teknonym n) (teknonym (person-sex n) level name))
-	       (values (1+ level) name))
-	     (values 1 (person-name n)))))
+    ((descend (n)
+      (declare (type person tree))
+      (if (person-children n)
+        (multiple-value-bind (level d) (descend (first (person-children n)))
+          (dolist (c (cdr (person-children n)))
+            (multiple-value-bind (clevel cd) (descend c)
+              (when (or (< level clevel)
+                        (and (= level clevel)
+                             (< (person-birth-utime cd) (person-birth-utime d))))
+                  (setf level clevel d cd))))
+          (setf (person-teknonym n) (teknonym (person-sex n) level (person-name d)))
+          (values (1+ level) d))
+        (values 1 n))))
     (descend tree)
     (values)))
