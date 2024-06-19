@@ -4,7 +4,9 @@
   (:use #:cl)
   (:export
    #:twice-linear
-   #:triangle-numbers))
+   #:triangle-numbers
+   #:gray-mystery-function
+   #:inverse-gray-mystery-function))
 (in-package #:puzzles/math)
 
 (defun twice-linear (n)
@@ -47,3 +49,28 @@
   "
   (declare (fixnum n))
   (* n n n))
+
+(defun gray-mystery-function (n)
+  "Return numbers created by reflection process.
+
+  Each resulting number is drawn from a table $T(m)$,
+  where $m$ is the number of bits in $n$. The resulting
+  number is at index $n$ in that table $T(m)$.
+
+  Table $T(m)$ is constructed by taking $T(m-1)$,
+  reversing the order of the elements and
+  prepending 1 in binary representation.
+
+  Examples:
+   $$ T(1) = [ 0, 1 ]$$
+   $$ T(2) = [ 0, 1, 3, 2 ]$$
+   $$ T(3) = [ 0, 1, 3, 2, 6, 7, 5, 4 ]$$
+   `` f(6) = 5 ``
+  "
+  (declare (fixnum n))
+  (logxor n (ash n -1)))
+
+(defun inverse-gray-mystery-function (n)
+  "Return the inverse number to the `gray-mystery-function` number above."
+  (if (zerop n) 0
+      (logxor n (inverse-gray-mystery-function (ash n -1)))))
