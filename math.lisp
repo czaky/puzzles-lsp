@@ -6,7 +6,8 @@
    #:twice-linear
    #:triangle-numbers
    #:gray-mystery-function
-   #:inverse-gray-mystery-function))
+   #:inverse-gray-mystery-function
+   #:burner))
 (in-package #:puzzles/math)
 
 (defun twice-linear (n)
@@ -74,3 +75,10 @@
   "Return the inverse number to the `gray-mystery-function` number above."
   (if (zerop n) 0
       (logxor n (inverse-gray-mystery-function (ash n -1)))))
+
+(defun burner (c h o)
+  "Coal `c`, hydrogen `h` and oxygen `o` are burning to water, dioxide, and methane."
+  (let* ((w (min (floor h 2) o))
+         (d (min c (floor (- o w) 2)))
+         (m (min (- c d) (floor (- h (* 2 w)) 4))))
+    (values w d m)))

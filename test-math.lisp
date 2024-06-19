@@ -21,3 +21,6 @@
              (loop :for n :from 0 to 10 :collect (gray-mystery-function n))))
   (is (equal '(0 1 3 2 7 6 4 5 15 14 12)
              (loop :for n :from 0 to 10 :collect (inverse-gray-mystery-function n)))))
+
+(test burner
+  (is (equal '(1 346 0) (multiple-value-list (burner 939 3 694)))))
