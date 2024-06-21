@@ -7,7 +7,8 @@
    #:triangle-numbers
    #:gray-mystery-function
    #:inverse-gray-mystery-function
-   #:burner))
+   #:burner
+   #:digit-power))
 (in-package #:puzzles/math)
 
 (defun twice-linear (n)
@@ -82,3 +83,27 @@
          (d (min c (floor (- o w) 2)))
          (m (min (- c d) (floor (- h (* 2 w)) 4))))
     (values w d m)))
+
+(defun digit-power (n p)
+  "Return the integer factor of `n` that makes it equal to
+  the sum of all `n` digits raised to a consecutive power expenents
+  starting at exponent `p`.
+
+  Examples:
+  ---------------
+  [n = 89, p = 1]
+  89 * 1 = (8^1 + 9^2) = 1 * (8 + 81)
+  => 1
+
+  [n = 694, p = 2]
+  695 * 2 = (6^2 + 9^3 + 5^4) = (36 + 729 + 625)
+  "
+  (loop
+    :with m integer = n :with r integer = 0
+    :for p integer :downfrom (+ p (floor (log n 10)))
+    :do (setf (values m r) (floor m 10))
+    :sum (expt r p) :into pow
+    :until (zerop m)
+    :finally
+    (return (multiple-value-bind (k r) (floor pow n)
+              (if (zerop r) k -1)))))

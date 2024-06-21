@@ -24,3 +24,10 @@
 
 (test burner
   (is (equal '(1 346 0) (multiple-value-list (burner 939 3 694)))))
+
+
+(test digit-power
+  (is (= 1  (digit-power 89 1)))
+  (is (= -1 (digit-power 92 1)))
+  (is (= 2  (digit-power 695 2)))
+  (is (= 51 (digit-power 46288 3))))
