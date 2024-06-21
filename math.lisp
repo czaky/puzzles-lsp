@@ -8,7 +8,8 @@
    #:gray-mystery-function
    #:inverse-gray-mystery-function
    #:burner
-   #:digit-power))
+   #:digit-power
+   #:sum-35))
 (in-package #:puzzles/math)
 
 (defun twice-linear (n)
@@ -107,3 +108,12 @@
     :finally
     (return (multiple-value-bind (k r) (floor pow n)
               (if (zerop r) k -1)))))
+
+(defun sum-35 (n)
+  "Sum multiples of 3 and 5 below `n`."
+  (declare (fixnum n))
+  (flet ((sum (x)
+    (let ((count (floor (1- n) x)))
+      (* count (1+ count) x))))
+    (if (minusp n) 0
+        (floor (+ (sum 3) (sum 5) (- (sum 15))) 2))))

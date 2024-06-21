@@ -31,3 +31,10 @@
   (is (= -1 (digit-power 92 1)))
   (is (= 2  (digit-power 695 2)))
   (is (= 51 (digit-power 46288 3))))
+
+(test sum-35
+  (is (= 23 (sum-35 10)))
+  (is (= 78 (sum-35 20)))
+  (is (= 9168 (sum-35 200)))
+  (is (= 0 (sum-35 -10)))
+  (is (= 12815595 (sum-35 7411))))
